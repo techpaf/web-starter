@@ -1,5 +1,5 @@
 # tsbits-starter
-### A simple starter for web projects
+### A simple starter for small web projects
 
 Hello there, here is a tiny starter I've build to answer my own needs.
 
