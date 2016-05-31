@@ -72,10 +72,6 @@ gulp.task( 'build', ['clean', 'sass'], function(){
     .pipe( gulpIf( '*.css', cssnano() ) )
     .pipe( gulp.dest( 'dist' ) );
 
-  // Copy img to dest without optim
-  //gulp.src( 'app/img/**/*' )
-    //.pipe( gulp.dest( 'dist/img/' ) );
-
   // Copy img to dist and optim
   gulp.src( 'app/img/**/*' )
     .pipe( imagemin( {
@@ -83,4 +79,12 @@ gulp.task( 'build', ['clean', 'sass'], function(){
       svgoPlugins: [ { removeViewBox: false } ]
     } ) )
     .pipe( gulp.dest( 'dist/img/' ) );
+
+  // Copy css to dist
+  gulp.src( 'app/css/**/*' )
+    .pipe( gulp.dest( 'dist/css/' ) );
+
+  // Copy js to dist
+  gulp.src( 'app/js/**/*' )
+    .pipe( gulp.dest( 'dist/js/' ) );
 } );
