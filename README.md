@@ -30,6 +30,7 @@ What's inside the box :
 * Minify & uglify CSS / JS files
 * Optimize images
 * Generate SVG icons into a SVG Sprite
+* Generate the Sass documentation
 * Create the release package
 
 #### Gulp tasks :
