@@ -13,7 +13,7 @@ What's inside the box :
 * Clone that repo on your computer
 * In a shell cd to where you cloned the git
 * Run npm install
-* Run gulp (by default this does a execute the watch task)
+* Run gulp (by default this executes the 'watch' task)
 * You're ready to code
 
 #### Start coding :
