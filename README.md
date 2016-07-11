@@ -13,7 +13,7 @@ What's inside the box :
 * Clone that repo on your computer
 * In a shell cd to where you cloned the git
 * Run npm install
-* Run gulp watch
+* Run gulp (by default this does a execute the watch task)
 * You're ready to code
 
 #### Start coding :
@@ -22,12 +22,14 @@ What's inside the box :
 * Your CSS must be written inside app/scss/style.scss
 * Your JS must be written inside app/js/main.js
 * Your images must be placed inside app/img/
+* Your SVG files must be placed inside app/icons/
 
 #### Gulp is in charge of :
 * Running a web server / livereload
 * Compiling Sass stuff
 * Minify & uglify CSS / JS files
 * Optimize images
+* Generate SVG icons into a SVG Sprite
 * Create the release package
 
 #### Gulp tasks :
@@ -44,6 +46,7 @@ What's inside the box :
   * Take all script tags inside <!--build:js js/main.min.js --> html file and build a file single file
   * Copy HTML / CSS / JS files inside dist
   * Optimize image from app/img/, then copy to dist/img
+  * Sprite all the SVG files and optimize them in app/icons in app/icons/dest/ and then copy to dist/icons
 
 #### Under the hood :
 * The watch task will watch change on .html .scss and .js files
