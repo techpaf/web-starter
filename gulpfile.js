@@ -122,9 +122,6 @@ gulp.task('sass-prod', function () {
       onError: console.error.bind(console, 'SASS error')
     }))
     .pipe(stripCssComments())
-    .pipe(uncss({
-        html: ['index.html']
-    }))
     .pipe(autoprefixer(autoprefixerOptions))
     .pipe(rename({
       suffix: '.min'
