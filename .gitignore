@@ -110,5 +110,6 @@ dist/
 ### Sass ###
 .sass-cache/
 *.css.map
+sassdoc/
 
 .editorconfig
