@@ -22,21 +22,27 @@ var sourcemaps       = require( 'gulp-sourcemaps' );
 // CONFIGURATION //
 ///////////////////
 var path = {
+  // Work in Progress CONFIG
   sass: './app/scss/**/*.scss',
-  js: [
-    './app/js/vendor/modernizr-2.8.3.min.js',
-    './app/js/vendor/typerendering-1.1.0.min.js',
-    './app/js/main.js'
-  ],
+  sass_dest: './app/css',
+  js: './app/js/**/*.js',
   img: './app/img/*',
   html: './app/*.html',
+  svg: './app/icons/*.svg',
+  svg_dest: './app/icons/dest',
+
+  // Build CONFIG
   dist: './dist',
-  js_dist: './dist/js'
+  js_dist: './dist/js',
+  css_dist: './dist/css',
+  img_dist: './dist/img',
+  svg_dist: './dist/icons'
 };
 
 var autoprefixerOptions = {
   browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1']
 };
+
 
 ////////////////
 // NANO TASKS //
@@ -64,7 +70,7 @@ gulp.task( 'sass', function(){
     .pipe( sass() )
     .pipe(autoprefixer(autoprefixerOptions))
     .pipe(sourcemaps.write())
-    .pipe( gulp.dest( 'app/css' ) )
+    .pipe( gulp.dest( path.sass_dest ) )
     .pipe(size())
     .pipe( browserSync.reload( {
       stream: true
@@ -74,29 +80,29 @@ gulp.task( 'sass', function(){
 
 // Deleting all dist content
 gulp.task( 'clean', function() {
-  return del.sync( 'dist' );
+  return del.sync( path.dist );
 } );
 
 
 // Image optimization
 gulp.task( 'min-images', function() {
-  return gulp.src( 'app/img/*' )
+  return gulp.src( path.img )
     .pipe( imagemin( {
       progressive: true,
       svgoPlugins: [ { removeViewBox: false } ]
     } ) )
-    .pipe( gulp.dest( 'dist/img' ) );
+    .pipe( gulp.dest( path.img_dist ) );
 } );
 
 // Sprite all the SVG inside the 'icons' folder
 // into a single SVG file in 'icons/dest'
 gulp.task('svgstore', function () {
     return gulp
-      .src('app/icons/*.svg')
+      .src(path.svg)
       .pipe(svgmin())
       .pipe(svgstore())
       .pipe(rename({baseline: 'sprite'}))
-      .pipe(gulp.dest('app/icons/dest'));
+      .pipe(gulp.dest(path.svg_dest));
 } );
 
 
@@ -107,9 +113,10 @@ gulp.task('svgstore', function () {
 
 // Watch task
 gulp.task( 'watch', ['browserSync'], function(){
-  gulp.watch( path.sass, ['sass'] ); 
-  gulp.watch( 'app/*.html', browserSync.reload ); 
-  gulp.watch( 'app/js/**/*.js', browserSync.reload ); 
+  gulp.watch( path.sass, ['sass'] );
+  gulp.watch( path.html, browserSync.reload ); 
+  gulp.watch( path.js, browserSync.reload ); 
+  gulp.watch( path.img, browserSync.reload ); 
 } );
 
 // Production Sass Task : Compile SASS into CSS + Remove comments 
@@ -131,36 +138,36 @@ gulp.task('sass-prod', function () {
         console.log(details.name + ' minified size : ' + details.stats.minifiedSize);
     }))
     .pipe(size())
-    .pipe(gulp.dest(path.dist + '/css'));
+    .pipe(gulp.dest(path.css_dist));
 } );
 
 // Build task
 gulp.task( 'build', ['clean', 'sass-prod'], function(){
-  gulp.src( 'app/*.html' )
+  gulp.src( path.html )
     .pipe( useref() )
     .pipe( gulpIf( '*.js', uglify() ) )
     .pipe( gulpIf( '*.css', cssnano() ) )
-    .pipe( gulp.dest( 'dist' ) );
+    .pipe( gulp.dest( path.dist ) );
 
   // Copy img to dist and optim
-  gulp.src( 'app/img/**/*' )
+  gulp.src( path.img )
     .pipe( imagemin( {
       progressive: true,
       svgoPlugins: [ { removeViewBox: false } ]
     } ) )
-    .pipe( gulp.dest( 'dist/img/' ) );
+    .pipe( gulp.dest( path.img_dist ) );
 
   // Copy SVG sprite to dist
-  gulp.src( 'app/icons/*.svg' )
-    .pipe( gulp.dest( 'dist/icons/' ) );
+  gulp.src( path.svg )
+    .pipe( gulp.dest( path.svg_dist ) );
 
   // Copy css to dist
-  gulp.src( 'app/css/**/*' )
-    .pipe( gulp.dest( 'dist/css/' ) );
+  gulp.src( path.css )
+    .pipe( gulp.dest( path.css_dist ) );
 
   // Copy js to dist
-  gulp.src( 'app/js/**/*' )
-    .pipe( gulp.dest( 'dist/js/' ) );
+  gulp.src( path.js )
+    .pipe( gulp.dest( path.js_dist ) );
 } );
 
 gulp.task('default', ['watch'], function () {});
