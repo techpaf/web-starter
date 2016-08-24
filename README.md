@@ -3,7 +3,7 @@
 
 Hello there, here is a tiny starter I've build to answer my own needs.
 
-What's inside the box :
+#### What's inside the box ?
 * [HTML5Boilerplate](https://html5boilerplate.com/)
 * [Gulp](http://gulpjs.com/)
 * [SaSS](http://sass-lang.com/)
