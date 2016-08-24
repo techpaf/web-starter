@@ -1,5 +1,9 @@
 var gulp             = require( 'gulp' );
 var sass             = require( 'gulp-sass' );
+var sassdoc          = require( 'sassdoc' );
+var plumber          = require( 'gulp-plumber' );
+var gutil            = require( 'gulp-util' );
+var sourcemaps       = require( 'gulp-sourcemaps' );
 var browserSync      = require( 'browser-sync').create();
 var useref           = require( 'gulp-useref' );
 var autoprefixer     = require( 'gulp-autoprefixer' );
@@ -14,8 +18,6 @@ var svgstore         = require( 'gulp-svgstore' );
 var svgmin           = require( 'gulp-svgmin' );
 var rename           = require( 'gulp-rename' );
 var size             = require( 'gulp-size' );
-var sassdoc          = require( 'sassdoc' );
-var sourcemaps       = require( 'gulp-sourcemaps' );
 
 
 ///////////////////
@@ -23,11 +25,7 @@ var sourcemaps       = require( 'gulp-sourcemaps' );
 ///////////////////
 var path = {
   sass: './app/scss/**/*.scss',
-  js: [
-    './app/js/vendor/modernizr-2.8.3.min.js',
-    './app/js/vendor/typerendering-1.1.0.min.js',
-    './app/js/main.js'
-  ],
+  js: './app/js/**/*.js',
   img: './app/img/*',
   html: './app/*.html',
   dist: './dist',
@@ -36,6 +34,18 @@ var path = {
 
 var autoprefixerOptions = {
   browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1']
+};
+
+var gulp_src = gulp.src;
+gulp.src = function() {
+  return gulp_src.apply(gulp, arguments)
+    .pipe(plumber(function(error) {
+      // Output an error message
+      gutil.log(gutil.colors.red('Error (' + error.plugin + '): ' + error.message));
+      // emit the end event, to properly end the task
+      this.emit('end');
+    })
+  );
 };
 
 ////////////////
@@ -61,7 +71,9 @@ gulp.task( 'sass', function(){
   return gulp.src( path.sass )
     .pipe(sassdoc())
     .pipe(sourcemaps.init())
-    .pipe( sass() )
+    .pipe(sass({
+      onError: console.error.bind(console, 'SASS error')
+    }))
     .pipe(autoprefixer(autoprefixerOptions))
     .pipe(sourcemaps.write())
     .pipe( gulp.dest( 'app/css' ) )
@@ -99,8 +111,6 @@ gulp.task('svgstore', function () {
       .pipe(gulp.dest('app/icons/dest'));
 } );
 
-
-
 /////////////////
 // MACRO TASKS //
 /////////////////
@@ -108,8 +118,8 @@ gulp.task('svgstore', function () {
 // Watch task
 gulp.task( 'watch', ['browserSync'], function(){
   gulp.watch( path.sass, ['sass'] ); 
-  gulp.watch( 'app/*.html', browserSync.reload ); 
-  gulp.watch( 'app/js/**/*.js', browserSync.reload ); 
+  gulp.watch( path.html, browserSync.reload ); 
+  gulp.watch( path.js, browserSync.reload ); 
 } );
 
 // Production Sass Task : Compile SASS into CSS + Remove comments 
@@ -136,10 +146,9 @@ gulp.task('sass-prod', function () {
 
 // Build task
 gulp.task( 'build', ['clean', 'sass-prod'], function(){
-  gulp.src( 'app/*.html' )
+  gulp.src( 'app/index.html' )
     .pipe( useref() )
     .pipe( gulpIf( '*.js', uglify() ) )
-    .pipe( gulpIf( '*.css', cssnano() ) )
     .pipe( gulp.dest( 'dist' ) );
 
   // Copy img to dist and optim
@@ -150,9 +159,21 @@ gulp.task( 'build', ['clean', 'sass-prod'], function(){
     } ) )
     .pipe( gulp.dest( 'dist/img/' ) );
 
-  // Copy SVG sprite to dist
+  // Copy PHP files to dist
+  gulp.src( 'app/*.php' )
+    .pipe( gulp.dest( 'dist' ) );
+
+  // Copy fonts files to dist
+  gulp.src( 'app/fonts/*.{ttf,woff,eof,svg,otf}' )
+    .pipe(gulp.dest( 'dist/fonts' ));
+
+  // Copy SVG icons to dist
   gulp.src( 'app/icons/*.svg' )
     .pipe( gulp.dest( 'dist/icons/' ) );
+    
+  // Copy SVG sprite & PNG fallbacks to dist
+  gulp.src( 'app/icons/dest/*.{svg,png}' )
+    .pipe( gulp.dest( 'dist/icons/dest/' ) );
 
   // Copy css to dist
   gulp.src( 'app/css/**/*' )
