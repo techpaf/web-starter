@@ -16,7 +16,6 @@ var browserSync = require('browser-sync');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var del = require('del');
-var critical = require('critical').stream;
 var imagemin = require('gulp-imagemin');
 var svgstore = require('gulp-svgstore');
 var svgmin = require('gulp-svgmin');
@@ -156,22 +155,6 @@ gulp.task('svgstore', function() {
 		.pipe(svgstore())
 		.pipe(rename({ baseline: 'sprite' }))
 		.pipe(gulp.dest(path.svgSprite));
-});
-
-// Generate & Inline Critical-path CSS
-gulp.task('critical', function() {
-	return gulp
-		.src(path.html)
-		.pipe(critical({
-			base: './',
-			inline: true,
-			minify: true,
-			dimensions: [{
-				height: 1300,
-				width: 900
-			}]
-		}))
-		.pipe(gulp.dest(path.dist));
 });
 
 // Deleting all dist content
