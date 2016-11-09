@@ -26,21 +26,21 @@ var size = require('gulp-size');
 // Configuration
 // ---------------------------------------------------------------
 var path = {
-	sass: 'app/assets/scss/**/*.scss',
-	css: 'app/assets/css/',
-	js: 'app/assets/js/*.js',
-	img: 'app/assets/img/**/*',
-	icons: 'app/assets/icons/*.svg',
-	svgSprite: 'app/assets/icons/dest',
-	fonts: 'app/assets/fonts/*.{ttf,woff,eof,svg,otf}',
+	sass: 'app/scss/**/*.scss',
+	css: 'app/css/',
+	js: 'app/js/*.js',
+	img: 'app/img/**/*',
+	icons: 'app/icons/*.svg',
+	svgSprite: 'app/icons/dest',
+	fonts: 'app/fonts/*.{ttf,woff,eof,svg,otf}',
 	html: 'app/*.html',
 	php: 'app/*.php',
 	dist: 'dist/',
-	dist_js: 'dist/assets/js/',
-	dist_css: 'dist/assets/css/',
-	dist_img: 'dist/assets/img/',
-	dist_fonts: 'dist/assets/fonts/',
-	dist_icons: 'dist/assets/icons/',
+	dist_js: 'dist/js/',
+	dist_css: 'dist/css/',
+	dist_img: 'dist/img/',
+	dist_fonts: 'dist/fonts/',
+	dist_icons: 'dist/icons/',
 };
 
 var autoprefixerOptions = {
@@ -186,10 +186,10 @@ gulp.task('build', ['clean', 'sass-prod', 'js-prod', 'img', 'svgstore'], functio
 		.pipe(gulp.dest(path.dist_icons));
 
 	// Copy SVG sprite & PNG fallbacks to dist
-	gulp.src('app/assets/icons/dest/*.{svg,png}')
+	gulp.src('app/icons/dest/*.{svg,png}')
 		.pipe(gulp.dest(path.dist_icons + 'dest/'));
 
 	// Copy js vendor files to dist
-	gulp.src('app/assets/js/vendor/*.js')
-		.pipe(gulp.dest('dist/assets/js/vendor'));
+	gulp.src('app/js/vendor/*.js')
+		.pipe(gulp.dest('dist/js/vendor'));
 });
