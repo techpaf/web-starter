@@ -188,7 +188,7 @@ gulp.task('build', ['clean', 'sass-prod', 'js-prod', 'img', 'svgstore'], functio
 	// Copy SVG sprite & PNG fallbacks to dist
 	gulp.src('app/icons/dest/*.{svg,png}')
 		.pipe(gulp.dest(path.dist_icons + 'dest/'));
-
+		
 	// Copy js vendor files to dist
 	gulp.src('app/js/vendor/*.js')
 		.pipe(gulp.dest('dist/js/vendor'));
