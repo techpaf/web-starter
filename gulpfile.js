@@ -35,12 +35,14 @@ var path = {
 	fonts: 'app/fonts/*.{ttf,woff,eof,svg,otf}',
 	html: 'app/*.html',
 	php: 'app/*.php',
+	resources: './app/resources/**/*',
 	dist: 'dist/',
 	dist_js: 'dist/js/',
 	dist_css: 'dist/css/',
 	dist_img: 'dist/img/',
 	dist_fonts: 'dist/fonts/',
 	dist_icons: 'dist/icons/',
+	dist_resources: './dist/resources'
 };
 
 var autoprefixerOptions = {
@@ -192,4 +194,8 @@ gulp.task('build', ['clean', 'sass-prod', 'js-prod', 'img', 'svgstore'], functio
 	// Copy js vendor files to dist
 	gulp.src('app/js/vendor/*.js')
 		.pipe(gulp.dest('dist/js/vendor'));
+
+	// Copy resources to dist
+	gulp.src( path.resources )
+		.pipe( gulp.dest( path.dist_resources ) );
 });
