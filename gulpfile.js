@@ -161,10 +161,6 @@ gulp.task( 'build', ['clean', 'sass-prod'], function(){
   gulp.src( path.svg )
     .pipe( gulp.dest( path.svg_dist ) );
 
-  // Copy css to dist
-  gulp.src( path.css )
-    .pipe( gulp.dest( path.css_dist ) );
-
   // Copy js to dist
   gulp.src( path.js )
     .pipe( gulp.dest( path.js_dist ) );
