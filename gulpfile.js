@@ -115,9 +115,9 @@ gulp.task('sass-prod', function() {
 			html: [path.html]
 		}))
 		.pipe(autoprefixer(autoprefixerOptions))
-		.pipe(rename({
-			suffix: '.min'
-		}))
+		// .pipe(rename({
+		// 	suffix: '.min'
+		// }))
 		.pipe(cleanCSS({ debug: true }, function(details) {
 			console.log(details.name + ' original size : ' + details.stats.originalSize);
 			console.log(details.name + ' minified size : ' + details.stats.minifiedSize);
@@ -132,7 +132,7 @@ gulp.task('js-prod', function() {
 	return gulp
 		.src(path.js)
 		.pipe(uglify())
-		.pipe(rename({ suffix: '.min' }))
+		// .pipe(rename({ suffix: '.min' }))
 		.pipe(gulp.dest(path.dist_js));
 });
 
