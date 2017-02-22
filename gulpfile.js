@@ -91,7 +91,7 @@ gulp.task('watch', ['serve'], function() {
 gulp.task('sass', function() {
 	return gulp
 		.src(path.sass)
-		.pipe(sassdoc())
+		// .pipe(sassdoc())
 		.pipe(sourcemaps.init())
 		.pipe(sass())
 		.pipe(autoprefixer(autoprefixerOptions))
