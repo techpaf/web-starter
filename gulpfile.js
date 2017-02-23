@@ -131,7 +131,7 @@ gulp.task('sass-prod', function() {
 gulp.task('js-prod', function() {
 	return gulp
 		.src(path.js)
-		.pipe(uglify())
+		// .pipe(uglify())
 		// .pipe(rename({ suffix: '.min' }))
 		.pipe(gulp.dest(path.dist_js));
 });

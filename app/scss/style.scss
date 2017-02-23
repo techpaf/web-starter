@@ -19,7 +19,7 @@ h2 {
 	font-size: 3rem;
 }
 
-a:not(.cta) {
+a.cta_txt {
 	text-decoration: none;
 	color: #222;
 	position: relative;
@@ -36,14 +36,14 @@ a:not(.cta) {
 	}
 }
 
-.cta {
+a.cta {
 	text-decoration: none;
 	color: black;
 	border: 1px solid black;
 	border-radius: 3px;
-	padding: 10px 20px;
+	padding: 5px 10px;
 	transition: all .2s ease-out;
-	font-size: .9rem;
+	font-size: .8rem;
 
 	&:hover {
 		opacity: .8;
@@ -57,35 +57,39 @@ a:not(.cta) {
 	background: white;
 	box-shadow: 0 0 10px 0px rgba(0,0,0,.2);
 	padding: 0 30px 0 0;
+	width: 300px;
+	font-size: .8rem;
 
 	img {
 		position: relative;
 		display: inline-block;
-		vertical-align: middle;
-		width: auto;
-		height: 15vh;
+		vertical-align: top;
+		max-width: 40%;
+		height: auto;
 	}
 
 	.infos {
 		position: relative;
 		display: inline-block;
-		vertical-align: middle;
+		vertical-align: top;
 		margin-left: 20px;
+		padding: 10px 0;
+		max-width: 40%;
 	}
 
 	p {
 		margin: 0;
-
-		& + p {
-			margin-top: 10px;
-		}
 	}
 
 	a {
-		margin-top: 10px;
+		display: inline-block;
 
 		&.site {
 			display: block;
+		}
+
+		&.cta {
+			margin-top: 5px;
 		}
 	}
 }
@@ -157,3 +161,64 @@ svg .slice {
 		transition: all .3s ease-out;
 	}
 }
+
+.nb-contrib {
+	font-size: 0;
+	& > p {
+		display: inline-block;
+		vertical-align: middle;
+		margin: 0;
+		font-size: 2rem;
+		width: 60vw;
+		span {
+			font-size: 3rem;
+		}
+	}
+}
+
+.some-contrib {
+	font-size: 0;
+
+	div {
+		display: inline-block;
+		vertical-align: middle;
+		width: 20vw;
+		position: relative;
+	}
+
+	img {
+		width: 100%;
+		height: auto;
+	}
+
+	p {
+		margin: 0;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		font-size: 1rem;
+		color: white;
+		background: rgba(0,0,0,.8);
+		padding: 10px;
+	}
+
+	&-left, &-right {
+		width: 20vw;
+		height: auto;
+		position: relative;
+		display: inline-block;
+		vertical-align: middle;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+

@@ -5,25 +5,10 @@ $(function(){
 
 	// INIT CLASS GIT
 	var git = new Github({
-		"token": "a60ad21d9a1bf7e6470cd1aa150cfff130e3c4b3"
+		"clientId": "bcc78630a3a4f8b2220e",
+		"clientSecret": "b0c6fb00bc9f2e7f99195f144c78cefb641dc1e0",
+		// MANQUE TOKEN
 	});
-
-	//===============================================================================
-	// LOGIN DE L'UTILISATEUR -- Marche pas, code retourné par GITHUB pas fonctionnel
-	//===============================================================================
-
-	// if(git.getUrlParameter("code") == "" || git.getUrlParameter("code") == undefined) {
-	// 	$(".js-oauth").bind("click", function(e) {
-	// 		e.preventDefault();
-	// 		window.location.href = "https://github.com/login/oauth/authorize?client_id=bcc78630a3a4f8b2220e&scope=user%20repo";
-	// 	});
-	// } else {
-		// $(".js-beforeCo").addClass("u-hide");
-		// git.getLanguages("/AdFabConnect/quickfr");
-		// git.getUser("emoc11");
-	// }
-
-
 
 	//==========================
 	// LOGIN PAR MON TOKEN PERSO
@@ -41,12 +26,12 @@ $(function(){
 	// Toutes les data d'un utilisateur
 	git.getUser("emoc11", function(res){
 		res_user = res;
-		console.log(res);
 
 		$('.user_infos img').attr({"src": res_user.avatar_url});
 		$('.user_infos .nom').text(res_user.name);
 		$('.user_infos .localisation').text(res_user.location);
-		$('.user_infos .site').attr("href", res_user.blog).text(res_user.blog);
+		$('.user_infos .site').attr("href", "http://"+res_user.blog).text(res_user.blog).attr("target", "_blank");
+		$('.user_infos .linkGit').attr("href", res_user.html_url);
 	});
 
 	// Tous les repos d'un utilisateur
@@ -95,7 +80,7 @@ $(function(){
 	                })
 	                .attr("d", arc);
 	        arcs.append("svg:text")
-	                .attr("transform", "translate("+ r*1.5 +", 0)")
+	                .attr("transform", "translate("+ r*1.3 +", 0)")
 		            .attr("text-anchor", "middle")
 		            // .text(function(d, i) {return res[i].lang+" : "+res[i].val+" lignes"; });
 		            .text(function(d, i) {return res[i].val+" lignes"; });
@@ -126,9 +111,39 @@ $(function(){
 			}
 		}
 		pieEvents();
+		
+		// Les langages d'un repo unique
+		// git.getRepoLangages("/AdFabConnect/quickfr", function(res) {
+		// });
 	});
-	
-	// Les langages d'un repo unique
-	// git.getRepoLangages("/AdFabConnect/quickfr", function(res) {
-	// });
+
+	git.getUserContributors("emoc11", function(res) {
+		for (var i = 0; i < 5; i++) {
+			$(".some-contrib-top").append("<a href='"+res[i].url+"' target='_blank'><div><img src='"+res[i].avatar+"' alt='' /> <p>"+res[i].login+"</p></div></a>");
+		}
+
+		for (var i = 5; i < 10; i++) {
+			$(".some-contrib-bot").append("<a href='"+res[i].url+"' target='_blank'><div><img src='"+res[i].avatar+"' alt='' /> <p>"+res[i].login+"</p></div></a>");
+		}
+
+		$(".some-contrib-left").append("<a href='"+res[11].url+"' target='_blank'><div><img src='"+res[11].avatar+"' alt='' /> <p>"+res[11].login+"</p></div></a>");
+		$(".some-contrib-right").append("<a href='"+res[12].url+"' target='_blank'><div><img src='"+res[12].avatar+"' alt='' /> <p>"+res[12].login+"</p></div></a>");
+
+		$(".nb-contrib span").text(res.length)
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });
