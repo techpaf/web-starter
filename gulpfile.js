@@ -91,7 +91,7 @@ gulp.task('watch', ['serve'], function() {
 gulp.task('sass', function() {
 	return gulp
 		.src(path.sass)
-		// .pipe(sassdoc())
+		.pipe(sassdoc())
 		.pipe(sourcemaps.init())
 		.pipe(sass())
 		.pipe(autoprefixer(autoprefixerOptions))
@@ -131,7 +131,7 @@ gulp.task('sass-prod', function() {
 gulp.task('js-prod', function() {
 	return gulp
 		.src(path.js)
-		// .pipe(uglify())
+		.pipe(uglify())
 		// .pipe(rename({ suffix: '.min' }))
 		.pipe(gulp.dest(path.dist_js));
 });

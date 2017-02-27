@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>GitVisual</title>
+        <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -18,38 +18,7 @@
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        
-        <div class="js-beforeCo u-hide">
-            <p>Veuillez vous connecter à Github pour accéder à vos informations</p>
-            <a href="#" class="js-oauth">Connexion</a>
-        </div>
-
-        <section class="user_infos">
-            <img class='avatar' src="" alt=""/>
-            <div class="infos">
-                <p class="nom"></p>
-                <p class="localisation"></p>
-                <a class="site cta_txt"></a>
-                <a href="#" class="linkGit cta" target="_blank">Voir sur GITHUB</a>
-            </div>
-        </section>
-        
-        <section class="center">
-            <h2>Repos Langages</h2>
-            <div class="user-lang-legend"></div>
-            <div class="user-lang-round"></div>
-        </section>
-        
-        <section class="center">
-            <h2>User's repos contributors</h2>
-            <div class="some-contrib some-contrib-top"></div>
-            <div class="nb-contrib">
-                <div class="some-contrib some-contrib-left"></div>
-                <p><span class="nb"></span> Contributors</p>
-                <div class="some-contrib some-contrib-right"></div>
-            </div>
-            <div class="some-contrib some-contrib-bot"></div>
-        </section>
+        tsbits starter
 
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -59,10 +28,22 @@
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
         <script src="js/vendor/jquery-1.12.0.min.js"></script>
         <script src="js/vendor/jquery-1.12.0.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.6.0/d3.min.js"></script>
+        <script src="js/vendor/svg4everybody.min.js"></script>
+        <script>svg4everybody();</script> 
         <script src="js/plugins.js"></script>
-        <script src="js/github.api.js"></script>
         <script src="js/main.js"></script>
         <!-- endbuild -->
+
+
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='https://www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+        </script>
     </body>
 </html>
