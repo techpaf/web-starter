@@ -6,7 +6,7 @@ var sass = require('gulp-sass');
 var sassdoc = require('sassdoc');
 var plumber = require('gulp-plumber');
 var gutil = require('gulp-util');
-var concat = require('gulp-concat');
+// var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var autoprefixer = require('gulp-autoprefixer');
 var cleanCSS = require('gulp-clean-css');
@@ -19,8 +19,8 @@ var del = require('del');
 var imagemin = require('gulp-imagemin');
 var svgstore = require('gulp-svgstore');
 var svgmin = require('gulp-svgmin');
-var rename = require('gulp-rename');
 var size = require('gulp-size');
+var usemin = require('gulp-usemin');
 
 // ---------------------------------------------------------------
 // Configuration
@@ -35,7 +35,7 @@ var path = {
 	fonts: 'app/fonts/*.{ttf,woff,eof,svg,otf}',
 	html: 'app/*.html',
 	php: 'app/*.php',
-  resources: './app/resources/**/*',
+  	resources: './app/resources/**/*',
 	dist: 'dist/',
 	dist_js: 'dist/js/',
 	dist_css: 'dist/css/',
@@ -101,39 +101,15 @@ gulp.task('sass', function() {
 		.pipe(reload({ stream: true }));
 });
 
-// Production Sass Task : Compile SASS into CSS + Remove comments 
-// + Remove unused css + Autoprefixer
-// + Rename + Minify + Move to dest folder
-gulp.task('sass-prod', function() {
-	return gulp
-		.src(path.sass)
-		.pipe(sass({
-			onError: console.error.bind(console, 'SASS error')
+// Production Assets : Use HTML to find and concat all CSS and JS files 
+// and move HTML, CSS and JS in dist in the good folder
+gulp.task('assets-prod', function() {
+	return gulp.src(path.html)
+		.pipe(usemin({
+			css: [sass({onError: console.error.bind(console, 'SASS error')}), stripCssComments(), uncss({html: [path.html]}), autoprefixer(autoprefixerOptions), cleanCSS({ debug: true }), size()],
+			js: [uglify()]
 		}))
-		.pipe(stripCssComments())
-		.pipe(uncss({
-			html: [path.html]
-		}))
-		.pipe(autoprefixer(autoprefixerOptions))
-		.pipe(rename({
-			suffix: '.min'
-		}))
-		.pipe(cleanCSS({ debug: true }, function(details) {
-			console.log(details.name + ' original size : ' + details.stats.originalSize);
-			console.log(details.name + ' minified size : ' + details.stats.minifiedSize);
-		}))
-		.pipe(size())
-		.pipe(gulp.dest(path.dist_css));
-});
-
-// JS Prod Task = Minimify JS + Rename it + Move it to build/js
-// + Concat files + Rename final file
-gulp.task('js-prod', function() {
-	return gulp
-		.src(path.js)
-		.pipe(uglify())
-		.pipe(rename({ suffix: '.min' }))
-		.pipe(gulp.dest(path.dist_js));
+		.pipe(gulp.dest(path.dist));
 });
 
 // Compress Images
@@ -170,10 +146,7 @@ gulp.task('clean', function() {
 
 gulp.task('default', ['watch'], function() {});
 
-gulp.task('build', ['clean', 'sass-prod', 'js-prod', 'img', 'svgstore'], function() {
-	// Copy HTML files to dist
-	gulp.src(path.html)
-		.pipe(gulp.dest(path.dist));
+gulp.task('build', ['clean', 'assets-prod', 'img', 'svgstore'], function() {
 
 	// Copy PHP files to dist
 	gulp.src(path.php)
