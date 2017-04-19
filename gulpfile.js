@@ -28,7 +28,7 @@ var size = require('gulp-size');
 var path = {
 	sass: 'app/scss/**/*.scss',
 	css: 'app/css/',
-	js: 'app/js/*.js',
+	js: 'app/js/**/*.js',
 	img: 'app/img/**/*',
 	icons: 'app/icons/*.svg',
 	svgSprite: 'app/icons/dest',
