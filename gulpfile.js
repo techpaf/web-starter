@@ -28,7 +28,7 @@ var usemin = require('gulp-usemin');
 var path = {
 	sass: 'app/scss/**/*.scss',
 	css: 'app/css/',
-	js: 'app/js/*.js',
+	js: 'app/js/**/*.js',
 	img: 'app/img/**/*',
 	icons: 'app/icons/*.svg',
 	svgSprite: 'app/icons/dest',
@@ -42,11 +42,11 @@ var path = {
 	dist_img: 'dist/img/',
 	dist_fonts: 'dist/fonts/',
 	dist_icons: 'dist/icons/',
-  dist_resources: './dist/resources'
+	dist_resources: './dist/resources'
 };
 
 var autoprefixerOptions = {
-	browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1']
+	browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1', 'ie >= 9']
 };
 
 var reload = browserSync.reload;
@@ -84,8 +84,8 @@ gulp.task('watch', ['serve'], function() {
 	gulp.watch(path.js, reload);
 });
 
-// Generate SassDoc + Add Sourcemaps + Autoprefixer 
-// + cache modified files 
+// Generate SassDoc + Add Sourcemaps + Autoprefixer
+// + cache modified files
 // + size the final css filereload on change
 // + refresh stream
 gulp.task('sass', function() {
@@ -101,7 +101,7 @@ gulp.task('sass', function() {
 		.pipe(reload({ stream: true }));
 });
 
-// Production Assets : Use HTML to find and concat all CSS and JS files 
+// Production Assets : Use HTML to find and concat all CSS and JS files
 // and move HTML, CSS and JS in dist in the good folder
 gulp.task('assets-prod', function() {
 	return gulp.src(path.html)
@@ -111,6 +111,41 @@ gulp.task('assets-prod', function() {
 		}))
 		.pipe(gulp.dest(path.dist));
 });
+
+// Production Sass Task : Compile SASS into CSS + Remove comments
+// + Remove unused css + Autoprefixer
+// + Rename + Minify + Move to dest folder
+// gulp.task('sass-prod', function() {
+// 	return gulp
+// 		.src(path.sass)
+// 		.pipe(sass({
+// 			onError: console.error.bind(console, 'SASS error')
+// 		}))
+// 		.pipe(stripCssComments())
+// 		.pipe(uncss({
+// 			html: [path.html]
+// 		}))
+// 		.pipe(autoprefixer(autoprefixerOptions))
+// 		// .pipe(rename({
+// 		// 	suffix: '.min'
+// 		// }))
+// 		.pipe(cleanCSS({ debug: true }, function(details) {
+// 			console.log(details.name + ' original size : ' + details.stats.originalSize);
+// 			console.log(details.name + ' minified size : ' + details.stats.minifiedSize);
+// 		}))
+// 		.pipe(size())
+// 		.pipe(gulp.dest(path.dist_css));
+// });
+
+// JS Prod Task = Minimify JS + Rename it + Move it to build/js
+// + Concat files + Rename final file
+// gulp.task('js-prod', function() {
+// 	return gulp
+// 		.src(path.js)
+// 		.pipe(uglify())
+// 		// .pipe(rename({ suffix: '.min' }))
+// 		.pipe(gulp.dest(path.dist_js));
+// });
 
 // Compress Images
 gulp.task('img', function() {
@@ -163,12 +198,12 @@ gulp.task('build', ['clean', 'assets-prod', 'img', 'svgstore'], function() {
 	// Copy SVG sprite & PNG fallbacks to dist
 	gulp.src('app/icons/dest/*.{svg,png}')
 		.pipe(gulp.dest(path.dist_icons + 'dest/'));
-		
+
 	// Copy js vendor files to dist
 	gulp.src('app/js/vendor/*.js')
 		.pipe(gulp.dest('dist/js/vendor'));
 
-  // Copy resources to dist
-  gulp.src( path.resources )
-    .pipe( gulp.dest( path.dist_resources ) );
+	// Copy resources to dist
+	gulp.src( path.resources )
+		.pipe( gulp.dest( path.dist_resources ) );
 });
