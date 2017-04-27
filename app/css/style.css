@@ -1,10 +1,1 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
-  overflow: hidden; }
-
-body {
-  min-height: 100%; }
-
-/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDQyxVQUFVO0VBQ1YsV0FBVztFQUNYLGlCQUFpQjtFQUNqQixpQkFBaUIsRUFDakI7O0FBRUQ7RUFDQyxpQkFBaUIsRUFDakIiLCJmaWxlIjoic3R5bGUuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaHRtbCwgYm9keXtcblx0bWFyZ2luOiAwO1xuXHRwYWRkaW5nOiAwO1xuXHRtaW4taGVpZ2h0OiAxMDAlO1xuXHRvdmVyZmxvdzogaGlkZGVuO1xufVxuXG5ib2R5e1xuXHRtaW4taGVpZ2h0OiAxMDAlO1xufSJdLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ== */
+body,html{margin:0;padding:0;min-height:100%;overflow:hidden}body{min-height:100%}body{background:#123456}
