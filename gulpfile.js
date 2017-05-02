@@ -22,9 +22,10 @@ var imagemin = require('gulp-imagemin');
 // Concatenation des imports HTML
 var usemin = require('gulp-usemin');
 
-// Gestion des erreurs
+// Gestion des erreurs / notifs
 var plumber = require('gulp-plumber');
 var gutil = require('gulp-util');
+var notify = require('gulp-notify');
 
 // Autres
 var del = require('del');
@@ -47,6 +48,7 @@ var path = {
   	resources: './app/resources/**/*',
 
 	dist: 'dist/',
+	dist_jsFiles: 'dist/js/**/*.js',
 	dist_js: 'dist/js/',
 	dist_cssFiles: 'dist/css/**/*.css',
 	dist_css: 'dist/css/',
@@ -85,6 +87,7 @@ gulp.task('serve', function() {
 		server: {
 			baseDir: 'app'
 		},
+		notify: false
 	})
 });
 
@@ -109,7 +112,8 @@ gulp.task('sass', function() {
 		.pipe(cleanCSS({ debug: true }))
 		.pipe(gulp.dest(path.devcss))
 		.pipe(size())
-		.pipe(reload({ stream: true }));
+		.pipe(reload({ stream: true }))
+        .pipe(notify({ message: 'SASS recompilé'}));
 });
 
 
@@ -125,11 +129,22 @@ gulp.task('js-css-html-prod', function() {
 		.pipe(gulp.dest(path.dist));
 });
 
-// Production : Minification des CSS dynamiquements crées par js-css-html-prod
-gulp.task('assets-prod', ['js-css-html-prod'], function() {
+gulp.task('css-prod', ['js-css-html-prod'], function() {
 	return gulp.src(path.dist_cssFiles)
 		.pipe(cleanCSS({ debug: true }))
 		.pipe(gulp.dest(path.dist_css))
+        .pipe(notify({ message: 'CSS prod minifié'}));
+});
+
+gulp.task('js-prod', ['js-css-html-prod'], function() {
+	return gulp.src(path.dist_jsFiles)
+		.pipe(uglify())
+		.pipe(gulp.dest(path.dist_js))
+        .pipe(notify({ message: 'JS prod minifié'}));
+});
+
+// Production : Minification des JS dynamiquements crées par js-css-html-prod
+gulp.task('assets-prod', ['js-css-html-prod', 'css-prod', 'js-prod'], function() {
 });
 
 // Compress Images
@@ -141,7 +156,8 @@ gulp.task('img', function() {
 			imagemin.optipng({optimizationLevel: 5}), // PNG opti
 			imagemin.svgo({plugins: [{removeViewBox: true}]}) // SVG opti
 		]))
-		.pipe(gulp.dest(path.dist_img));
+		.pipe(gulp.dest(path.dist_img))
+        .pipe(notify({ message: 'IMG minified'}));
 });
 
 // Deleting all dist content
