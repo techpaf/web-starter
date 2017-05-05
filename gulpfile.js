@@ -190,8 +190,9 @@ gulp.task('build', ['clean', 'assets-prod', 'img'], function() {
 		.pipe(gulp.dest(path.dist_icons + 'dest/'));
 
 	// Copy js vendor files to dist
-	gulp.src('app/js/vendor/*.js')
-		.pipe(gulp.dest('dist/js/vendor'));
+	// PAS utile, tous les vendors minifiés dans main.min.js au build !
+	// gulp.src('app/js/vendor/*.js')
+	// 	.pipe(gulp.dest('dist/js/vendor'));
 
 	// Copy resources to dist
 	gulp.src( path.resources )
