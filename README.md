@@ -1,4 +1,5 @@
 ![alt text](https://raw.githubusercontent.com/tsbits/web-starter/master/app/icon.png)
+#WEB STARTER
 ### A simple starter for small web projects
 
 Hello there, here is a tiny starter I've build to answer my own needs.
