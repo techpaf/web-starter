@@ -51,7 +51,7 @@ Hello there, here is a tiny starter I've build to answer my own needs.
 
 #### Under the hood :
 * The watch task will watch change on .html .scss and .js files
-* Never edit your CSS in app/css/style.css, file is erased each to SaSS is compiled
+* Never edit your CSS in app/css/style.css, file is erased each time SaSS compiled
 * app/css/main.css & app/css/normalize.css are CSS from [HTML5Boilerplate](https://html5boilerplate.com/)
 * app/js/plugins.js & app/js/vendors/modernizr-$.min.js are JS from [HTML5Boilerplate](https://html5boilerplate.com/)
 
