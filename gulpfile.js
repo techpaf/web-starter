@@ -165,6 +165,10 @@ gulp.task('clean', function() {
 	return del.sync('dist');
 });
 
+gulp.task('clean-except-img', function() {
+	return del.sync(['dist/css', 'dist/js', 'dist/css', 'dist/*.html']);
+});
+
 // ---------------------------------------------------------------
 // MACRO TASKS
 // ---------------------------------------------------------------
@@ -172,6 +176,34 @@ gulp.task('clean', function() {
 gulp.task('default', ['watch'], function() {});
 
 gulp.task('build', ['clean', 'assets-prod', 'img'], function() {
+
+	// Copy PHP files to dist
+	gulp.src(path.php)
+		.pipe(gulp.dest(path.dist));
+
+	// Copy fonts files to dist
+	gulp.src(path.fonts)
+		.pipe(gulp.dest(path.dist_fonts));
+
+	// Copy SVG icons to dist
+	gulp.src(path.icons)
+		.pipe(gulp.dest(path.dist_icons));
+
+	// Copy SVG sprite & PNG fallbacks to dist
+	gulp.src('app/icons/dest/*.{svg,png}')
+		.pipe(gulp.dest(path.dist_icons + 'dest/'));
+
+	// Copy js vendor files to dist
+	// PAS utile, tous les vendors minifiés dans main.min.js au build !
+	// gulp.src('app/js/vendor/*.js')
+	// 	.pipe(gulp.dest('dist/js/vendor'));
+
+	// Copy resources to dist
+	gulp.src( path.resources )
+		.pipe( gulp.dest( path.dist_resources ) );
+});
+
+gulp.task('quick-build', ['clean-except-img', 'assets-prod'], function() {
 
 	// Copy PHP files to dist
 	gulp.src(path.php)
