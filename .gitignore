@@ -111,5 +111,6 @@ dist/
 .sass-cache/
 *.css.map
 sassdoc/
+css/style.css
 
 .editorconfig
