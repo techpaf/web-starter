@@ -3,7 +3,7 @@
 # WEB STARTER
 ### A simple starter for small web projects
 
-Hello there, here is a tiny starter I've build to answer my own needs.
+Hello there, here is a tiny starter we've build to answer our own needs.
 
 #### What's inside the box ?
 * [HTML5Boilerplate](https://html5boilerplate.com/)
@@ -16,7 +16,7 @@ Hello there, here is a tiny starter I've build to answer my own needs.
 * In a shell cd to where you cloned the git
 * Run npm install
 * Run gulp (by default this executes the 'watch' task)
-* You're ready to code
+* You're ready to start coding
 
 #### Start coding :
 * You have to work inside app/ (all your src must be inside)
@@ -24,16 +24,12 @@ Hello there, here is a tiny starter I've build to answer my own needs.
 * Your CSS must be written inside app/scss/style.scss
 * Your JS must be written inside app/js/main.js
 * Your images must be placed inside app/img/
-* Your SVG files must be placed inside app/icons/
 
 #### Gulp is in charge of :
 * Running a web server / livereload
 * Compiling Sass stuff
-* Minify & uglify CSS / JS files
-* Optimize images
-* Generate SVG icons into a SVG Sprite
-* Generate the Sass documentation
-* Create the release package
+* Minifying & uglifying CSS / JS files
+* Optimizing images
 
 #### Gulp tasks :
 * gulp watch
@@ -49,7 +45,7 @@ Hello there, here is a tiny starter I've build to answer my own needs.
   * Take all script tags inside <!--build:js js/main.min.js --> html file and build a file single file
   * Copy HTML / CSS / JS files inside dist
   * Optimize image from app/img/, then copy to dist/img
-  * Sprite all the SVG files and optimize them in app/icons in app/icons/dest/ and then copy to dist/icons
+* gulp quick-build
 
 #### Under the hood :
 * The watch task will watch change on .html .scss and .js files
