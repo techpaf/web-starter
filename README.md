@@ -46,6 +46,8 @@ Hello there, here is a tiny starter we've build to answer our own needs.
   * Copy HTML / CSS / JS files inside dist
   * Optimize image from app/img/, then copy to dist/img
 * gulp quick-build
+  * same as gulp build, but without minifying image
+
 
 #### Under the hood :
 * The watch task will watch change on .html .scss and .js files
