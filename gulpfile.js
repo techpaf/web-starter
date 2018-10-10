@@ -15,6 +15,7 @@ var stripCssComments = require('gulp-strip-css-comments');
 
 // Pour le JS
 var uglify = require('gulp-uglify');
+var stripDebug = require('gulp-strip-debug');
 
 // Pour les images
 var imagemin = require('gulp-imagemin');
@@ -138,6 +139,7 @@ gulp.task('css-prod', ['js-css-html-prod'], function() {
 
 gulp.task('js-prod', ['js-css-html-prod'], function() {
 	return gulp.src(path.dist_jsFiles)
+		.pipe(stripDebug())
 		.pipe(uglify())
 		.pipe(gulp.dest(path.dist_js))
         .pipe(notify({ message: 'JS prod minifié'}));
