@@ -114,3 +114,6 @@ sassdoc/
 app/css/style.css
 
 .editorconfig
+
+### Package-lock ###
+package-lock.json
